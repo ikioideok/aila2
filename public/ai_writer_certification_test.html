@@ -387,6 +387,26 @@
         </div>
     </header>
 
+<!-- 🔽 ここから貼る -->
+<section class="input-section">
+  <!-- 入力欄 -->
+  <textarea id="q31Text" placeholder="Q31の回答をここに入力"></textarea>
+  <textarea id="q32Text" placeholder="Q32の回答をここに入力"></textarea>
+  <button id="submitBtn">送信</button>
+
+  <!-- 結果表示 -->
+  <pre id="ai-score-result"></pre>
+
+  <!-- レーダーチャート -->
+  <div class="chart-container">
+    <canvas id="q31RadarChart" width="300" height="300"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="q32RadarChart" width="300" height="300"></canvas>
+  </div>
+</section>
+<!-- 🔼 ここまで貼る -->
+
     <section class="section">
         <div class="container">
             <h1 class="section-title">一般AIライター認定試験</h1>
@@ -1185,5 +1205,7 @@
         });
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/grade.js"></script>
 </body>
 </html>
