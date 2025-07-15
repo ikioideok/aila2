@@ -1,15 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const gradeApi = require('./api/grade');
-
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/api', gradeApi);
+// POSTリクエストのbodyをJSONで受け取れるようにする
+app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// 静的ファイル（HTMLやCSS、JS）をpublicフォルダから提供
+app.use(express.static('public'));
+
+// ここで /api/grade をルーティングに追加
+const gradeApi = require('./api/grade');
+app.use('/api/grade', gradeApi);
+
+// サーバー起動
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
