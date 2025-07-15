@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AILA - 佐藤 健太</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue-grey: #3D4852;
+            --light-blue-grey: #62748d;
+            --accent-gold: #B8860B;
+            --accent-gold-light: #d8aa4b;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background: #FDFCF9;
+            --section-bg: #f7f9fc;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-sans: 'Noto Sans JP', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--primary-blue-grey);
+        }
+
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(253, 252, 249, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(253, 252, 249, 0.98);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue-grey);
+            display: inline; /* blockからinlineに変更 */
+            transition: color 0.3s ease;
+        }
+        .logo-association {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.75rem;
+            color: var(--primary-blue-grey);
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .logo-sub {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .logo-association {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.8rem;
+            color: var(--primary-blue-grey);
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .logo:hover .logo-main {
+            color: var(--accent-gold);
+        }
+        .logo:hover .logo-sub {
+            color: var(--accent-gold-light);
+        }
+
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Main Content */
+        .main {
+            padding-top: 80px;
+        }
+        
+        .section {
+            padding: 5rem 0; 
+        }
+
+        .section-alt {
+            background: var(--section-bg);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        /* Member Detail */
+        .member-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .member-detail-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            font-family: var(--font-serif);
+        }
+
+        .member-detail-name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-detail-role {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .member-detail-description {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .member-detail-social {
+            margin-top: 2rem;
+        }
+
+        .member-detail-social a {
+            display: inline-block;
+            margin: 0 10px;
+            color: var(--primary-blue-grey);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .member-detail-social a:hover {
+            color: var(--accent-gold);
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-gold-light);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue-grey);
+            border: 2px solid var(--accent-gold);
+            padding: 0.75rem 1.5rem; /* Smaller padding for these buttons */
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-gold);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue-grey);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6rem 0 2rem;
+            font-family: var(--font-sans);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        .footer-section h3 {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+        }
+        
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .animated-item {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .animated-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .section { padding: 3.5rem 0; } 
+            .section-title { font-size: 2.2rem; }
+            .about-content, .benefits, .blog-grid, .footer-content { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <span class="logo-main">AILA</span>
+                <span class="logo-association">AIライター協会</span>
+                <span class="logo-sub">Artificial Intelligence Writing Literacy Association</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html#about">AILAとは</a></li>
+                    <li><a href="index.html#activities">活動内容</a></li>
+                    <li><a href="exam.html">検定について</a></li>
+                    <li><a href="index.html#members">会員紹介</a></li>
+                    <li><a href="index.html#blog">コラム</a></li>
+                    <li><a href="index.html#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="member-detail" class="section">
+            <div class="container">
+                <div class="member-detail-container animated-item">
+                    <div class="member-detail-avatar">佐</div>
+                    <h2 class="member-detail-name">佐藤 健太</h2>
+                    <p class="member-detail-role">テクニカルライティング</p>
+                    <p class="member-detail-description">
+                        複雑な技術情報を分かりやすく伝える文章作りが得意です。
+                        特に、AIを活用した技術文書の自動生成と、その後の人間による校正・推敲プロセスを専門としています。
+                        読者が理解しやすい、正確で簡潔な技術文書の作成を通じて、
+                        製品やサービスの価値を最大限に引き出すことに貢献します。
+                    </p>
+                    <div class="member-detail-social">
+                        <!-- Add social media links here if available -->
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.49-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.1 5.4 7.5 3.53 5.03c-.37.63-.58 1.37-.58 2.19 0 1.49.75 2.81 1.91 3.56-.71-.02-1.3-.21-1.85-.5v.03c0 2.08 1.48 3.82 3.44 4.21-.36.1-.74.15-1.13.15-.28 0-.55-.03-.81-.08 1.4 4.2 4.87 7.29 9.17 7.38 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0-1.48 1.16-3.35 1.85-5.38 1.85-1.1 0-2.16-.06-3.19-.18C6.7 20.19 9.8 21 13 21c6.35 0 9.83-5.27 9.83-9.83 0-.15 0-.3-.01-.45.84-.6 1.56-1.36 2.14-2.22z"/></svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.077V12h3.361V9.353c0-3.322 1.988-5.16 5-5.16 1.455 0 2.88.259 2.88.259v3.15h-1.616c-1.672 0-2.182 1.031-2.182 2.09v1.494h3.564l-.576 3.61H13.44V21.878C18.344 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AILA</h3>
+                    <p>Artificial Intelligence Writing Literacy Association</p>
+                </div>
+                <div class="footer-section">
+                    <h3>サイトマップ</h3>
+                    <div><a href="index.html#about">AILAとは</a></div>
+                    <div><a href="index.html#activities">活動内容</a></div>
+                    <div><a href="exam.html">検定について</a></div>
+                    <div><a href="index.html#members">会員紹介</a></div>
+                    <div><a href="index.html#blog">コラム</a></div>
+                    <div><a href="index.html#contact">お問い合わせ</a></div>
+                </div>
+                <div class="footer-section">
+                    <h3>法的情報</h3>
+                    <div><a href="#">プライバシーポリシー</a></div>
+                    <div><a href="#">利用規約</a></div>
+                    <div><a href="#">運営団体情報</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AILA (Artificial Intelligence Writing Literacy Association). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+
+            // --- ページ内リンクのみスムーズスクロールを適用 ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            const contactForm = document.querySelector('.contact-form form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('お問い合わせありがとうございます。後日担当者よりご連絡いたします。');
+                    this.reset();
+                });
+            }
+
+            const animatedItems = document.querySelectorAll('.animated-item');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            animatedItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 30}ms`;
+                observer.observe(item);
+            });
+            
+        });
+    </script>
+</body>
+</html>

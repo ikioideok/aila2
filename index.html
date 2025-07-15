@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AILA - AIライター協会（修正版）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- デザイン改善提案 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 色味はそのまま継承 */
+            --primary-blue-grey: #3D4852;
+            --light-blue-grey: #62748d;
+            --accent-gold: #B8860B;
+            --accent-gold-light: #d8aa4b;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background: #FDFCF9;
+            --section-bg: #f7f9fc;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-sans: 'Noto Sans JP', sans-serif;
+            
+            /* スムーズなアニメーションのためのイージング関数を共通化 */
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale; /* Firefoxでの表示を滑らかに */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--primary-blue-grey);
+            /* 見出しの文字間隔を微調整し、高級感を演出 */
+            letter-spacing: 0.02em;
+        }
+
+        /* Header (member-detail-mizuma.html から移植) */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(253, 252, 249, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(253, 252, 249, 0.98);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue-grey);
+            display: inline;
+            transition: color 0.3s ease;
+        }
+        .logo-association {
+            font-family: var(--font-serif);
+            font-size: 0.75rem;
+            color: var(--primary-blue-grey);
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .logo-sub {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .logo-association {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.8rem;
+            color: var(--primary-blue-grey);
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .logo:hover .logo-main {
+            color: var(--accent-gold);
+        }
+        .logo:hover .logo-sub {
+            color: var(--accent-gold-light);
+        }
+
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-gold);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: radial-gradient(circle at 10% 20%, var(--light-blue-grey), var(--primary-blue-grey) 90%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: slow-pan-particles 60s infinite linear;
+        }
+        .hero::before {
+             background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 15%),
+                radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.06), transparent 15%);
+        }
+        .hero::after {
+             background-image:
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.07), transparent 15%),
+                radial-gradient(circle at 10% 70%, rgba(255, 255, 255, 0.05), transparent 15%);
+             animation-delay: -30s;
+        }
+
+        @keyframes slow-pan-particles {
+            0% { transform: rotate(0deg) scale(1); opacity: 0.05; }
+            50% { opacity: 0.08; }
+            100% { transform: rotate(360deg) scale(1.1); opacity: 0.05; }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            line-height: 1.7;
+            font-family: var(--font-sans);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s var(--ease-out-quart);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--accent-gold);
+            color: white;
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-gold-light);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(184, 134, 11, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-blue-grey);
+            transform: translateY(-5px);
+        }
+
+        /* Main Content */
+        .main {
+            padding-top: 80px;
+        }
+
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-alt {
+            background: var(--section-bg);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-light);
+        }
+
+        .about-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .declaration {
+            background: transparent;
+            padding: 3rem;
+            border-radius: 10px;
+            margin: 6rem 0;
+            border-left: 4px solid var(--accent-gold);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .declaration-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .declaration-text {
+            font-size: 1.1rem;
+            line-height: 2.2;
+            margin-bottom: 2rem;
+        }
+
+        .declaration-author {
+            text-align: right;
+            font-weight: 500;
+            font-family: var(--font-serif);
+            color: var(--primary-blue-grey);
+        }
+
+        /* Activities Section */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+            transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart);
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.08);
+        }
+
+        .activity-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-card p {
+            color: var(--text-light);
+        }
+
+        /* Exam Section */
+        .exam-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .exam-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 5rem;
+        }
+
+        .benefit-section {
+            background: white;
+            padding: 2.5rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+        }
+        .benefit-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .benefit-list {
+            list-style: none;
+        }
+        .benefit-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+            position: relative;
+            padding-left: 2.2rem;
+        }
+        .benefit-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .benefit-list li:last-child {
+            border-bottom: none;
+        }
+        .benefit-list strong {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Members Section */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        .member-card {
+            background: var(--section-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: none;
+            text-align: center;
+            transition: transform 0.4s var(--ease-out-quart), background 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart);
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .member-card:hover {
+            transform: translateY(-10px);
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.08);
+        }
+        .member-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            font-family: var(--font-serif);
+        }
+        .member-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .member-role {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-family: var(--font-sans);
+            margin-bottom: 1rem;
+        }
+        .member-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+            transition: transform 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart);
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.08);
+        }
+        .blog-date {
+            background: var(--accent-gold);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            text-align: right;
+        }
+        .blog-content {
+            padding: 1.5rem 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-title {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .blog-excerpt {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .blog-link {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            transition: color 0.3s ease;
+            align-self: flex-start;
+        }
+        .blog-link span {
+            display: inline-block;
+            transition: transform 0.3s var(--ease-out-quart);
+        }
+        .blog-link:hover {
+            color: var(--accent-gold-light);
+        }
+        .blog-link:hover span {
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 3.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--primary-blue-grey);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #f7f9fc;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.15);
+            background-color: white;
+        }
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue-grey);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 7rem 0 3rem;
+            font-family: var(--font-sans);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 6rem;
+        }
+        .footer-section h3 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+        }
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+        .footer-section a:hover {
+            color: white;
+            transform: translateX(4px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Buttons */
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        /* スクロールアニメーション用のクラス */
+        .animated-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s var(--ease-out-quart), transform 0.8s var(--ease-out-quart);
+            transition-delay: var(--delay, 0s);
+        }
+        .animated-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 1024px) {
+            .section { padding: 6rem 0; }
+            .about-content, .benefits { gap: 3rem; }
+            .blog-grid { grid-template-columns: 1fr 1fr; }
+            .blog-grid .blog-card:last-child {
+                grid-column: 1 / -1;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .section { padding: 4rem 0; }
+            .section-title { font-size: 2.2rem; margin-bottom: 4rem;}
+            .about-content, .benefits, .blog-grid, .footer-content, .members-grid, .activities-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .benefit-section { padding: 2rem; }
+            .footer-content { text-align: center; }
+            .footer-section a:hover { transform: none; }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <span class="logo-main">AILA</span>
+                <span class="logo-association">AIライター協会</span>
+                <span class="logo-sub">Artificial Intelligence Writing Literacy Association</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html#about">AILAとは</a></li>
+                    <li><a href="index.html#activities">活動内容</a></li>
+                    <li><a href="exam.html">検定について</a></li>
+                    <li><a href="index.html#members">会員紹介</a></li>
+                    <li><a href="index.html#blog">コラム</a></li>
+                    <li><a href="index.html#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title animated-item" style="--delay: 0.1s">AI時代における、<br>ライティングの新しい基準を。</h1>
+            <p class="hero-subtitle animated-item" style="--delay: 0.2s">
+                文章生成AIの普及により、誰でも"書ける"時代が到来しました。<br>
+                AILAは、AIと人間の協働による"本質的な文章力"を再定義します。
+            </p>
+            <div class="hero-buttons animated-item" style="--delay: 0.3s">
+                <a href="#about" class="btn btn-primary">AILAとは</a>
+                <a href="ai_writer_certification_test.html" class="btn btn-secondary">検定に挑戦する</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="main">
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title animated-item">AIライター協会とは</h2>
+                <div class="about-content">
+                    <div class="about-text animated-item">
+                        <h3>私たちのミッション</h3>
+                        <p>AILA（AIライター協会）は、AI生成文章の編集・推敲・構成スキルを評価・育成する団体です。検定制度やトレーニングを通じて、実務で役立つAIライティングの活用力を可視化します。</p>
+                    </div>
+                    <div class="about-text animated-item">
+                        <h3>新しい基準の確立</h3>
+                        <p>AI技術の進化により、私たちの「書く」という行為は革命的な変化を遂げました。AILAは、人間が持つべき「本質的な文章力」を再定義し、AIと人間の協働による価値ある文章創造を支援します。</p>
+                    </div>
+                </div>
+
+                <div class="declaration animated-item">
+                    <h3 class="declaration-title">設立宣言</h3>
+                    <p class="declaration-text">
+                        AI技術の進化は、私たちの「書く」という行為に革命をもたらしました。
+                        しかし、AIが生成する文章は、時に無機質で、文脈を欠き、読者の心に響かないことがあります。
+                        AILAは、このAI時代において、人間が持つべき「本質的な文章力」とは何かを問い直し、
+                        AIの力を最大限に活用しつつも、人間ならではの感性、思考、そして倫理観に基づいた
+                        「真に価値ある文章」を生み出すための新しい基準を確立します。
+                        私たちは、AIと人間が協働することで、より豊かで、より誠実な情報発信が実現できると信じています。
+                    </p>
+                    <div class="declaration-author">理事長 水間 雄紀</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="activities" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title animated-item">主な活動</h2>
+                <div class="activities-grid animated-container">
+                    <div class="activity-card animated-item">
+                        <h3>AILA検定の実施</h3>
+                        <p>AI時代に必要な文章力を客観的に評価・認定する検定制度</p>
+                    </div>
+                    <div class="activity-card animated-item">
+                        <h3>添削・推敲トレーニング</h3>
+                        <p>AI出力を高品質な文章に仕上げる実践的なスキル向上プログラム</p>
+                    </div>
+                    <div class="activity-card animated-item">
+                        <h3>認定ライター制度</h3>
+                        <p>プロフェッショナルなライターとしての知識と技術を体系的に習得</p>
+                    </div>
+                    <div class="activity-card animated-item">
+                        <h3>文章表現に関するコラム発信</h3>
+                        <p>AIライティングに関する知見やベストプラクティスの共有</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="exam" class="section">
+            <div class="container">
+                <h2 class="section-title animated-item">AILA検定とは？</h2>
+                <div class="exam-content animated-item">
+                    <p class="exam-description">
+                        AILA検定は、AI出力文章をどこまで人間が"整える"ことができるかを評価する実践的検定です。
+                        単なるAI利用ではなく、"伝わる文章"に仕上げる力を可視化します。
+                    </p>
+                    <div class="cta-section">
+                        <a href="exam.html" class="btn btn-primary">検定に申し込む</a>
+                    </div>
+                </div>
+
+                <div class="benefits animated-container">
+                    <div class="benefit-section animated-item">
+                        <h3>個人（ライター）のメリット</h3>
+                        <ul class="benefit-list">
+                            <li><strong>スキル証明と信頼性向上:</strong> AIライティングの専門知識と実践スキルを客観的に証明</li>
+                            <li><strong>案件獲得の優位性:</strong> 認定資格による他のライターとの差別化</li>
+                            <li><strong>最新知識の習得:</strong> 常に進化するAI技術とライティングのベストプラクティスを学習</li>
+                            <li><strong>コミュニティ参加:</strong> 認定者限定のコミュニティで情報交換と協業の機会</li>
+                        </ul>
+                    </div>
+                    <div class="benefit-section animated-item">
+                        <h3>法人（ライターを探している側）のメリット</h3>
+                        <ul class="benefit-list">
+                            <li><strong>高品質なコンテンツ制作:</strong> 信頼性の高いコンテンツを安定的に制作</li>
+                            <li><strong>業務効率の最大化:</strong> AIを効果的に活用できる人材による生産性向上</li>
+                            <li><strong>ブランドイメージの向上:</strong> 先進性と信頼性のアピール</li>
+                            <li><strong>社内研修の基盤:</strong> 体系的なAIライティングスキル向上プログラム</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="members" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title animated-item">会員紹介</h2>
+                <div class="members-grid animated-container">
+                    <a href="member-detail-mizuma.html" class="member-card animated-item">
+                        <div class="member-avatar">水</div>
+                        <div class="member-name">水間 雄紀</div>
+                        <div class="member-role">理事長</div>
+                        <div class="member-description">AIライティングの新しい基準を確立し、AIと人間が協働する豊かな情報社会の実現を目指します。</div>
+                    </a>
+                    <a href="member-detail-tanaka.html" class="member-card animated-item">
+                        <div class="member-avatar">田</div>
+                        <div class="member-name">田中 美咲</div>
+                        <div class="member-role">ビジネス・マーケティング</div>
+                        <div class="member-description">AI×人間の協働で、読者に響く文章を追求しています。</div>
+                    </a>
+                    <a href="member-detail-sato.html" class="member-card animated-item">
+                        <div class="member-avatar">佐</div>
+                        <div class="member-name">佐藤 健太</div>
+                        <div class="member-role">テクニカルライティング</div>
+                        <div class="member-description">複雑な技術情報を分かりやすく伝える文章作りが得意です。</div>
+                    </a>
+                    <a href="member-detail-yamada.html" class="member-card animated-item">
+                        <div class="member-avatar">山</div>
+                        <div class="member-name">山田 花子</div>
+                        <div class="member-role">コンテンツマーケティング</div>
+                        <div class="member-description">SEOとユーザビリティを両立した記事制作を心がけています。</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="section">
+            <div class="container">
+                <h2 class="section-title animated-item">コラム</h2>
+                <div class="blog-grid animated-container">
+                    <article class="blog-card animated-item">
+                        <div class="blog-date">2025.01.15</div>
+                        <div class="blog-content">
+                            <h3 class="blog-title">ChatGPTだけで書くことの危うさ</h3>
+                            <p class="blog-excerpt">AI生成文章の特徴と、読みやすさを向上させるための具体的な改善方法について解説します。</p>
+                            <a href="article-chatgpt.html" class="blog-link">続きを読む <span>&rarr;</span></a>
+                        </div>
+                    </article>
+                    <article class="blog-card animated-item">
+                        <div class="blog-date">2025.01.10</div>
+                        <div class="blog-content">
+                            <h3 class="blog-title">AILA検定：不合格事例と改善案</h3>
+                            <p class="blog-excerpt">検定でよく見られる文章の問題点と、プロが実践する修正テクニックを事例とともに紹介。</p>
+                            <a href="#" class="blog-link">続きを読む <span>&rarr;</span></a>
+                        </div>
+                    </article>
+                    <article class="blog-card animated-item">
+                        <div class="blog-date">2025.01.05</div>
+                        <div class="blog-content">
+                            <h3 class="blog-title">AIに任せすぎない編集力とは</h3>
+                            <p class="blog-excerpt">単なるAI出力から読者に価値を提供する記事へと変換するための実践的なアプローチ。</p>
+                            <a href="#" class="blog-link">続きを読む <span>&rarr;</span></a>
+                        </div>
+                    </article>
+                </div>
+                <div class="cta-section animated-item">
+                    <a href="blog.html" class="btn btn-secondary" style="border-color: var(--accent-gold); color: var(--accent-gold);">すべての記事を見る</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title animated-item">お問い合わせ・ご相談</h2>
+                <p class="animated-item" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+                    協会活動への参加、検定についてのご質問、取材・登壇依頼など、どんな内容でもお気軽にお問い合わせください。
+                </p>
+                <div class="contact-form animated-item">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">お名前</label>
+                            <input type="text" id="name" name="name" placeholder="山田 太郎" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メールアドレス</label>
+                            <input type="email" id="email" name="email" placeholder="your@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">お問い合わせ内容</label>
+                            <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+                        </div>
+                        <div class="cta-section">
+                            <button type="submit" class="btn btn-primary">お問い合わせ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AILA</h3>
+                    <p>Artificial Intelligence Writing Literacy Association</p>
+                </div>
+                <div class="footer-section">
+                    <h3>サイトマップ</h3>
+                    <div><a href="#about">AILAとは</a></div>
+                    <div><a href="#activities">活動内容</a></div>
+                    <div><a href="exam.html">検定について</a></div>
+                    <div><a href="members.html">メンバー紹介</a></div>
+                    <div><a href="blog.html">コラム</a></div>
+                    <div><a href="#contact">お問い合わせ</a></div>
+                </div>
+                <div class="footer-section">
+                    <h3>法的情報</h3>
+                    <div><a href="#">プライバシーポリシー</a></div>
+                    <div><a href="#">利用規約</a></div>
+                    <div><a href="#">運営団体情報</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AILA (Artificial Intelligence Writing Literacy Association). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- ヘッダーのスクロールエフェクト ---
+        const header = document.getElementById('header');
+        if (header) {
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+        }
+        
+        // --- ページ内リンクのみスムーズスクロールを適用 ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // --- お問い合わせフォームの送信アラート ---
+        const contactForm = document.querySelector('.contact-form form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('お問い合わせありがとうございます。後日担当者よりご連絡いたします。');
+                this.reset();
+            });
+        }
+        
+        // --- スクロールアニメーションのロジック ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('animated-container')) {
+                        const items = entry.target.querySelectorAll('.animated-item');
+                        items.forEach((item, index) => {
+                            item.style.setProperty('--delay', `${index * 0.1}s`);
+                            item.classList.add('in-view');
+                        });
+                    } else {
+                        entry.target.classList.add('in-view');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const animatedElements = document.querySelectorAll('.animated-item, .animated-container');
+        animatedElements.forEach(el => {
+            if (el.classList.contains('animated-item') && el.closest('.animated-container')) {
+                return;
+            }
+            observer.observe(el);
+        });
+    });
+    </script>
+</body>
+</html>

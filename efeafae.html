@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIライター検定 - AI時代のライター力を証明しよう</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #FFE066;
+            --text-color: #2c3e50;
+            --bg-light: #f8f9fa;
+            --bg-accent: #f0f8ff;
+            
+            --primary-blue-grey: #3D4852;
+            --light-blue-grey: #62748d;
+            --accent-gold: #B8860B;
+            --accent-gold-light: #d8aa4b;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background: #FDFCF9;
+            --section-bg: #f7f9fc;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-sans: 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: white;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            font-weight: 900;
+            line-height: 1.4;
+            letter-spacing: 1.5px;
+            color: transparent;
+            background: linear-gradient(45deg, var(--primary-color), #87CEEB);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .diagonal-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: skewY(-4deg);
+            background: var(--bg-accent);
+            z-index: -1;
+        }
+        
+        .hero {
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        #hero-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hero-main-content {
+            position: relative;
+            z-index: 3;
+            padding-left: 8%; /* 左端からの余白を指定 */
+        }
+        
+        .hero-text-content {
+             text-align: left;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero-title span {
+            display: block;
+        }
+        .hero-title-line1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .hero-title-line2 {
+            font-size: 6.5rem;
+            font-weight: 900;
+            letter-spacing: .03em;
+            white-space: nowrap;
+        }
+        .hero-title-line3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+            font-weight: 400;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+        
+        .hero-bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 8s ease-in-out;
+            z-index: 1;
+            transform: scale(1.05);
+        }
+
+        .hero-bg-slide.active {
+            opacity: 1;
+            z-index: 2;
+            transform: scale(1);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--secondary-color), #FFF176);
+            color: var(--primary-color);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .intro {
+            padding: 60px 0;
+            background: var(--bg-light);
+            text-align: center;
+        }
+        .intro p {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .intro .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .features-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        .features-item:nth-child(even) .features-text {
+            order: 2;
+        }
+        .features-icon-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .features-icon-wrapper svg {
+            width: 80px;
+            height: 80px;
+            color: var(--primary-color);
+        }
+        .features-text .reason {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .features-text h3 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .voice {
+            overflow: hidden;
+        }
+        .voice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+        .voice-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-color);
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+        }
+        .voice-card::before {
+            content: '"';
+            position: absolute;
+            top: 0px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+            z-index: 0;
+            opacity: 0.8;
+        }
+        .voice-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .voice-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 20px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .voice-info h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .voice-card h3 { font-size: 1.4rem; margin-bottom: 20px; position: relative; z-index: 1;}
+        .voice-message { margin-bottom: 20px; }
+        .voice-advice { background: #e3f2fd; padding: 15px; border-radius: 10px; border-left: 3px solid #4A90E2;}
+        .voice-advice strong { color: #4A90E2; display: block; margin-bottom: 5px; }
+
+
+        .apply-content { text-align: center; }
+
+
+        .flow {
+             overflow: hidden;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .flow-steps::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 15%;
+            width: 70%;
+            height: 2px;
+            background-image: linear-gradient(to right, var(--primary-color) 50%, transparent 50%);
+            background-size: 20px 2px;
+            background-repeat: repeat-x;
+            z-index: 0;
+        }
+        .step-card {
+            width: 23%;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 2rem;
+            margin: -80px auto 20px auto;
+            border: 5px solid white;
+        }
+        .step-card h3 { color: var(--primary-color); }
+
+        .course {
+            overflow: hidden;
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+        .course-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .course-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            color: var(--primary-color);
+        }
+        .course-title { font-size: 1.5rem; color: #4A90E2; margin-bottom: 20px; }
+        .course-price { font-size: 2.5rem; color: #333; font-weight: bold; margin-bottom: 20px; }
+        .course-details { text-align: left; margin-bottom: 30px; color: #555; }
+        .course-details p { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .course-details p::before { content: '•'; position: absolute; left: 0; color: var(--primary-color); font-weight: bold; }
+        .course-card > p { margin: 20px 0; }
+
+        .benefit-card h3 { color: var(--primary-color); font-size: 1.5rem; margin-bottom: 15px;}
+        .benefit-list { list-style: none; }
+        .benefit-list li { padding: 5px 0 5px 30px; position: relative; }
+        .benefit-list li::before { content: '✓'; position: absolute; left: 0; color: #4A90E2; font-weight: bold; font-size: 1.2rem; }
+
+
+        .supervisor {
+             overflow: hidden;
+        }
+        .supervisor-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 50px;
+            align-items: center;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        .supervisor-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .supervisor-info h3 { color: var(--primary-color); }
+
+        .faq-item { background: var(--bg-accent); margin-bottom: 15px; border-radius: 10px; overflow: hidden; }
+        .faq-question { background: white; padding: 20px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
+        .faq-question:hover { color: var(--primary-color); }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.5s ease;}
+        .faq-answer.active { max-height: 200px; padding: 20px; }
+        .faq-icon { font-size: 1.5rem; transition: transform 0.3s ease; }
+        .faq-question.active .faq-icon { transform: rotate(45deg); }
+
+        @media (max-width: 992px) {
+            .flow-steps { flex-direction: column; align-items: center; gap: 60px; }
+            .flow-steps::before { display: none; }
+            .step-card { width: 80%; }
+        }
+        
+        @media (max-width: 768px) {
+            .section { padding: 80px 0; }
+            
+            .hero {
+                text-align: center;
+                justify-content: center;
+                padding: 80px 20px;
+            }
+            .hero-main-content {
+                width: 100%;
+                padding-left: 0;
+            }
+            .hero-text-content {
+                text-align: center;
+            }
+
+            .hero-title-line1, .hero-title-line3 { font-size: 1.5rem; white-space: normal; }
+            .hero-title-line2 { font-size: 3.5rem; white-space: normal; }
+
+            .features-item, .features-item:nth-child(even) { grid-template-columns: 1fr; }
+            .features-item:nth-child(even) .features-text { order: 0; }
+            .features-text { text-align: center; }
+            .supervisor-content { grid-template-columns: 1fr; text-align: center; }
+            .supervisor-image { margin: 0 auto; }
+            .voice-grid { grid-template-columns: 1fr; }
+            .course-grid { grid-template-columns: 1fr; }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--primary-blue-grey);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(253, 252, 249, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(253, 252, 249, 0.98);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue-grey);
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .logo-sub {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .logo:hover .logo-main {
+            color: var(--accent-gold);
+        }
+        .logo:hover .logo-sub {
+            color: var(--accent-gold-light);
+        }
+
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .footer {
+            background: var(--primary-blue-grey);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6rem 0 2rem;
+            font-family: var(--font-sans);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        .footer-section h3 {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+        }
+        
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <span class="logo-main">AILA</span>
+                <span class="logo-sub">Artificial Intelligence Writing Literacy Association</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html#about">AILAとは</a></li>
+                    <li><a href="index.html#activities">活動内容</a></li>
+                    <li><a href="exam.html">検定について</a></li>
+                    <li><a href="index.html#members">会員紹介</a></li>
+                    <li><a href="index.html#blog">コラム</a></li>
+                    <li><a href="index.html#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="hero-bg-slide"></div>
+        <div class="hero-bg-slide"></div>
+        <div class="hero-bg-slide"></div>
+        <div class="hero-bg-slide"></div>
+        
+        <canvas id="hero-dots"></canvas>
+        <div class="hero-main-content">
+            <div class="hero-text-content">
+                <h1 class="hero-title">
+                    <span class="hero-title-line1">AI時代の</span>
+                    <span class="hero-title-line2">ライターカ</span>
+                    <span class="hero-title-line3">を証明しよう。</span>
+                </h1>
+                <p class="hero-subtitle">AIと共に文章をつくる時代へ。<br>AILA検定は、実践スキルを証明する日本初のライティング検定です。</p>
+                <a href="#apply" class="cta-button">今すぐ試験に挑戦する</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="container">
+            <p>案件に応募しても通らない…<br>提案しても無視されてしまう…<br>今の時代、ライターは必要ないのでは──。<br><br></p>
+            <p class="highlight" style="font-size: 1.5rem; font-weight: bold; color: #E24A4A;">そんなあなたにおすすめなのがAIライター検定です。</p>
+        </div>
+    </section>
+
+    <section class="section features">
+        <div class="container">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Features</span><br>AIライター検定の特徴</h2>
+            <div class="features-list">
+                <div class="features-item">
+                    <div class="features-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.2C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.8C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.2L15.17,18.35C15.12,18.58 15.08,18.82 15.08,19.08C15.08,20.71 16.39,22 18,22C19.61,22 20.92,20.71 20.92,19.08C20.92,17.46 19.61,16.08 18,16.08Z" /></svg>
+                    </div>
+                    <div class="features-text">
+                        <div class="reason">Reason 01</div>
+                        <h3>AIと人間の協働</h3>
+                        <p><strong>01｜AI使用を前提にした"実践評価"</strong></p>
+                        <p>ChatGPTなどの生成AIを使って文章を作るのは当たり前の時代。AILA検定では、プロンプトの工夫から構成・表現の整え方まで、実際のライティング現場に即した力を試されます。</p>
+                    </div>
+                </div>
+                 <div class="features-item">
+                    <div class="features-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z" /></svg>
+                    </div>
+                    <div class="features-text">
+                        <div class="reason">Reason 02</div>
+                        <h3>編集スキル</h3>
+                        <p><strong>02｜「整える力」が問われる編集実技</strong></p>
+                        <p>ただ"書ける"だけでは不十分。AILA検定では、AIが生成した文章を「読みやすく、伝わる形に整える」力が重要視されます。文法や表現の微調整、トーンの調整まで、"人間の介在価値"が評価対象になります。</p>
+                    </div>
+                </div>
+                 <div class="features-item">
+                    <div class="features-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12,2C6.486,2,2,6.486,2,12s4.486,10,10,10s10-4.486,10-10S17.514,2,12,2z M12,20c-4.411,0-8-3.589-8-8s3.589-8,8-8 s8,3.589,8,8S16.411,20,12,20z M16.293,8.293l-5.293,5.293l-2.293-2.293L7.293,12.707l3,3l0.707,0.707l0.707-0.707l6-6L16.293,8.293z" /></svg>
+                    </div>
+                    <div class="features-text">
+                        <div class="reason">Reason 03</div>
+                        <h3>証明書とキャリア</h3>
+                        <p><strong>03｜スキルを"証明"できる新しい肩書き</strong></p>
+                        <p>合格者にはPDF証明書やバッジを発行。さらに希望者は公式サイトで認定ライターとして掲載されるため、SNSや営業時にも活用可能。「AIに頼るだけじゃない、自分で整えられるライター」であることを証明できます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section voice">
+        <div class="diagonal-bg"></div>
+        <div class="container" style="position: relative;">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Voice</span><br>合格者の声</h2>
+            <div class="voice-grid">
+                <div class="voice-card">
+                    <div class="voice-profile">
+                        <div class="voice-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80')"></div>
+                        <div class="voice-info">
+                            <h4>佐藤 恵（仮名）</h4>
+                            <div class="subtitle">20代女性</div>
+                        </div>
+                    </div>
+                    <h3>"なんとなく"のAI活用から、一歩踏み出せました</h3>
+                    <div class="voice-message">
+                        <p>AIで文章を書くことはできても、どこか手応えがなくて、「これで本当にいいのかな…」と悩むことが多かったです。AILA検定を受けて、自分のプロンプトや編集の仕方にちゃんとした評価がついたことで、自信を持ってクライアントに提案できるようになりました。最近は「指名」で依頼されることも増えて、仕事がグッとやりやすくなった実感があります。</p>
+                    </div>
+                    <div class="voice-advice">
+                        <strong>― これから受ける方へ ―</strong>
+                        <p>AIライティングって、まだまだ「誰でもできるでしょ」と思われがち。でも、きちんと考えて書く人は確実に評価されます。検定はその"ちゃんと考えてる"ことを証明してくれるので、一歩踏み出したい人にはおすすめです。</p>
+                    </div>
+                </div>
+                <div class="voice-card">
+                    <div class="voice-profile">
+                        <div class="voice-avatar" style="background-image: url('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&q=80')"></div>
+                        <div class="voice-info">
+                            <h4>山本 拓也（仮名）</h4>
+                            <div class="subtitle">30代男性</div>
+                        </div>
+                    </div>
+                    <h3>「編集の"感覚"が、スキルとして整理されました」</h3>
+                    <div class="voice-message">
+                        <p>これまで独学でライティングに取り組み、ある程度の成果も出してきました。でも、AIライター検定の上級を受けたことで、自分の編集力が"感覚任せ"だったことに気づかされたんです。フィードバックを通して、どこをどう直せば読みやすくなるのかを論理的に理解できるようになり、より複雑な構成や難易度の高い案件にも、迷わず対応できるようになりました。</p>
+                    </div>
+                    <div class="voice-advice">
+                        <strong>― これから受ける方へ ―</strong>
+                        <p>AI時代に求められるのは、"ただ直す"ではなく"伝わるように整える"力です。AIライター検定は、その編集スキルを客観的に見直し、武器として磨く絶好の場だと思います。自分の実力を言語化したい方に、ぜひおすすめしたいですね。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section apply" id="apply">
+        <div class="container">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Apply</span><br>お申し込み方法</h2>
+            <div class="apply-content">
+                <p>「検定を申し込む」ボタンより、お名前・メールアドレス等の情報と決済を完了してください（Stripe／Square対応）。ご登録メールに試験用リンクと受験IDをお送りします。試験は【即日〜1週間以内】で、都合のよいタイミングに1回限り受験いただけます。</p>
+                <div style="margin: 30px 0;">
+                    <a href="#" class="cta-button">検定を申し込む</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section flow">
+        <div class="diagonal-bg"></div>
+        <div class="container" style="position: relative;">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Flow</span><br>受講開始までの流れ</h2>
+            <div class="flow-steps">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>検定を申し込む</h3>
+                    <p>専用フォームから必要事項を入力し、受験料を決済（Stripe／Square対応）。登録メールアドレスに、試験リンクと受験IDが届きます。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>好きなタイミングで受験</h3>
+                    <p>受験は即日〜1週間以内で選択可能。時間が確保できるときに集中して取り組めます。試験中はAIの使用もOK。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>答案を提出</h3>
+                    <p>編集スキルや構成力、表現力など、実務に通じる力をもとに採点。合否通知は、受験から7営業日以内にメールで届きます。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <h3>スキルの"証明"を手に入れる</h3>
+                    <p>合格者にはPDF証明書やバッジが付与され、希望者はAILAサイトに認定者として掲載されます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section course">
+        <div class="container">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Course</span><br>あなたのレベルに合わせて選べる2つの検定</h2>
+            <div class="course-grid">
+                 <div class="course-card">
+                    <div>
+                        <div class="course-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M19 2H5C3.9 2 3 2.9 3 4V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V4C21 2.9 20.1 2 19 2M11 6H13V10H17V12H13V16H11V12H7V10H11V6Z"/></svg>
+                        </div>
+                        <h3 class="course-title">一般AIライター認定</h3>
+                        <div class="course-price">10,000円<span style="font-size: 1rem;">（税込）</span></div>
+                        <div class="course-details">
+                            <p>対象：AI初心者〜中級者</p>
+                            <p>活用シーン：SNS／ブログ／業務文書など</p>
+                            <p>試験内容：基礎知識・編集実技・200字ライティング</p>
+                            <p>合格基準：50点満点中35点以上</p>
+                        </div>
+                        <p>「とりあえず書けた」から、「ちゃんと伝わる」へ。AIとの共作を、ワンランク上のスキルに変えたい方へ。</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="#apply" class="cta-button">申し込む</a>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div>
+                        <div class="course-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"/></svg>
+                        </div>
+                        <h3 class="course-title">上級AIライター認定</h3>
+                        <div class="course-price">50,000円<span style="font-size: 1rem;">（税込）</span></div>
+                         <div class="course-details">
+                            <p>対象：プロライター・編集者・AI運用担当者</p>
+                            <p>試験内容：記述式知識・500字構成ライティング・徹底添削</p>
+                            <p>合格基準：100点満点中70点以上</p>
+                        </div>
+                        <p>文章の構成力・推敲力・情報編集力が問われる実践型。あなたの「人間力」がAI文章にどう介入できるか、その真価が試されます。</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="#apply" class="cta-button">申し込む</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section benefit">
+        <div class="diagonal-bg"></div>
+        <div class="container" style="position: relative;">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Benefit</span><br>合格者特典</h2>
+            <div class="course-grid">
+                <div class="benefit-card">
+                    <h3>一般AIライター認定</h3>
+                    <ul class="benefit-list">
+                        <li>合格証PDFの発行</li>
+                        <li>AILA公式サイトに認定者として名前を掲載（希望制）</li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>上級AIライター認定</h3>
+                    <ul class="benefit-list">
+                        <li>上級認定ロゴ入りの合格証PDFを発行</li>
+                        <li>AILAサイトで上級認定者一覧に掲載</li>
+                        <li>上級ライター専用コミュニティ（非公開）にご招待</li>
+                        <li>AILA案件への推薦対象（希望・実力に応じて依頼）</li>
+                        <li>勉強会・限定イベントへの優先招待（予定）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section supervisor">
+        <div class="container">
+            <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">Supervisor</span><br>AILA検定 監修者のご紹介</h2>
+            <div class="supervisor-content">
+                <div class="supervisor-image">
+                </div>
+                <div class="supervisor-info">
+                    <h3>一般社団法人AIライター協会 理事長 水間 雄紀（みずま・ゆうき）</h3>
+                    <p class="supervisor-title">監修者</p>
+                    <p>ライターとしての活動歴10年以上。AIによる文章生成が一般化する中で、「AIに任せるだけでは、伝わる文章にはならない」と強く実感。生成AIを活用しながらも、「人の手で仕上げる」編集力や構成力の重要性を伝えるべく、AILA検定を企画・監修。現在はAIライティングの教育・普及活動を通じて、「人とAIが協働する時代の新しいライター像」の確立を目指している。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section faq">
+        <div class="diagonal-bg"></div>
+        <div class="container" style="position: relative;">
+             <h2 class="section-title"><span style="font-size: 1.5rem; color: red;">FAQ</span><br>よくある質問</h2>
+             <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. AIツールを使っても大丈夫？</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A. はい、むしろAIツールの使用を推奨しています。AILA検定では、AIを適切に活用して質の高い文章を作成する能力を評価します。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 合格しなかった場合、再受験はできますか？</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A. はい、再受験が可能です。再受験の際は別途受験料が必要となります。詳細はお申し込み時にご確認ください。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 合格までの平均学習時間は？</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A. 一般：2〜5時間程度、上級：8〜15時間程度が目安です。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero" style="padding: 80px 0; min-height: auto; background: var(--primary-blue-grey);">
+        <canvas id="final-cta-dots" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+        <div class="container">
+            <div style="text-align:center; position:relative; z-index: 2;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 30px; color: white;">今すぐAIライター検定に挑戦しよう</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 40px; color: white;">あなたのライティングスキルを証明する第一歩を踏み出しましょう。</p>
+                <a href="#apply" class="cta-button">検定を申し込む</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AILA</h3>
+                    <p>Artificial Intelligence Writing Literacy Association</p>
+                </div>
+                <div class="footer-section">
+                    <h3>サイトマップ</h3>
+                    <div><a href="index.html#about">AILAとは</a></div>
+                    <div><a href="index.html#activities">活動内容</a></div>
+                    <div><a href="exam.html">検定について</a></div>
+                    <div><a href="index.html#members">会員紹介</a></div>
+                    <div><a href="index.html#blog">コラム</a></div>
+                    <div><a href="index.html#contact">お問い合わせ</a></div>
+                </div>
+                <div class="footer-section">
+                    <h3>法的情報</h3>
+                    <div><a href="#">プライバシーポリシー</a></div>
+                    <div><a href="#">利用規約</a></div>
+                    <div><a href="#">運営団体情報</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AILA (Artificial Intelligence Writing Literacy Association). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        if (header) {
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                question.classList.toggle('active');
+                answer.classList.toggle('active');
+            });
+        });
+
+        // Dots background animation
+        const setupDotsAnimation = (canvasId) => {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let dots = [];
+            const numDots = 50;
+
+            function resizeCanvas() {
+                const parent = canvas.parentElement;
+                canvas.width = parent.offsetWidth;
+                canvas.height = parent.offsetHeight;
+            }
+
+            function createDots() {
+                dots = [];
+                for (let i = 0; i < numDots; i++) {
+                    dots.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 1.5 + 1
+                    });
+                }
+            }
+
+            function animate() {
+                if (!canvas.getContext) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                dots.forEach(dot => {
+                    dot.x += dot.vx;
+                    dot.y += dot.vy;
+
+                    if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+                    if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+            
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                createDots();
+            });
+            
+            setTimeout(() => {
+                resizeCanvas();
+                createDots();
+                animate();
+            }, 100);
+        };
+        
+        setupDotsAnimation('hero-dots');
+        setupDotsAnimation('final-cta-dots');
+
+
+        // Scroll Fade-in Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section:not(.hero)').forEach((section) => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+
+        // Hero Section Slideshow
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.hero-bg-slide');
+            const images = [
+                'aila_exam1.png', 
+                'aila_exam2.png',
+                'aila_exam3.png',
+                'aila_exam4.jpg'
+            ];
+
+            if (slides.length > 0 && images.length > 0) {
+                slides.forEach((slide, index) => {
+                    slide.style.backgroundImage = `url('${images[index % images.length]}')`;
+                });
+                
+                let currentSlide = 0;
+                slides[currentSlide].classList.add('active');
+                
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }, 5000);
+            }
+        });
+
+    </script>
+</body>
+</html>
