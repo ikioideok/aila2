@@ -1,6 +1,15 @@
+// Client side logic for the AI writer certification exam
+//
+// This script wires up the exam page to the back‑end grading API.  It
+// listens for clicks on the submit button, sends the candidate’s
+// answers to /api/grade, parses the JSON portion of the response and
+// then displays both the human readable feedback and two radar
+// charts.  The charts use Chart.js which should be loaded via CDN on
+// the exam page.
+
 document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('submitBtn');
-  const resultElem = document.getElementById("ai-score-result");
+  const resultElem = document.getElementById('ai-score-result');
 
   if (!submitBtn || !resultElem) {
     console.error('submitBtn または ai-score-result が見つかりません。');
@@ -11,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const q31Text = document.getElementById('q31Text').value;
     const q32Text = document.getElementById('q32Text').value;
 
-    resultElem.innerHTML = ''; // 前の結果クリア
+    // Clear any previous result
+    resultElem.innerHTML = '';
 
     const response = await fetch('/api/grade', {
       method: 'POST',
@@ -28,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = await response.json();
     const content = data.gptResponse;
 
-    // JSON部分だけ抜き出す
+    // Extract JSON portion from the GPT response
     const match = content.match(/```json([\s\S]*?)```/);
     let scores = null;
     if (match) {
@@ -40,11 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 残りの講評テキストだけ表示
+    // Display the feedback text excluding the JSON codeblock
     const reviews = content.replace(/```json[\s\S]*?```/, '').trim();
     resultElem.textContent = reviews;
 
-    // レーダーチャート描画
+    // Draw radar charts if we have parsed scores
     if (scores) {
       createRadarChart('q31RadarChart', '編集実技', [
         scores.q31_scores?.['自然さ'],
@@ -65,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// レーダーチャート描画関数
+// Helper function to create a radar chart.  Expects a canvas element
+// with the given id and Chart.js loaded on the page.
 function createRadarChart(canvasId, label, data) {
   const ctx = document.getElementById(canvasId)?.getContext('2d');
   if (!ctx) {

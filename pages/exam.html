@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIライター認定試験</title>
+    <link rel="stylesheet" href="/public/style.css" />
+    <!-- Chart.js CDN for radar charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="header">
+      <div class="header-container">
+        <a href="/" class="logo">
+          <span class="logo-main">AILA</span>
+          <span class="logo-sub">AIライター協会</span>
+        </a>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="/">ホーム</a></li>
+            <li><a href="members.html">会員紹介</a></li>
+            <li><a href="blog.html">コラム</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Exam Section -->
+    <section class="section" style="padding-top:100px;">
+      <div class="container">
+        <h2>AIライター認定試験</h2>
+        <p>以下の2つの課題に回答してください。送信するとAIによる採点結果と講評が表示されます。</p>
+
+        <div class="member-card" style="max-width:800px;margin:2rem auto;">
+          <div class="question-block">
+            <label for="q31Text">Q31 編集実技（下記の文章を読みやすく修正してください）</label>
+            <p style="font-size:0.9rem;background:var(--section-bg);padding:0.5rem;border-radius:5px;margin-bottom:0.5rem;">
+              AIは未来のライティングを変革します。それは効率性を高め、創造性を刺激します。しかし、人間の介入は不可欠です。なぜなら、AIは感情やニュアンスを完全に理解できないからです。最終的な品質は人間の編集に依存します。
+            </p>
+            <textarea id="q31Text" rows="4" placeholder="ここに修正案を入力してください…"></textarea>
+          </div>
+          <div class="question-block" style="margin-top:1.5rem;">
+            <label for="q32Text">Q32 200字ライティング（テーマ：未来の働き方）</label>
+            <textarea id="q32Text" rows="6" placeholder="ここに200字程度の文章を入力してください…"></textarea>
+          </div>
+          <button id="submitBtn" class="button" style="width:100%;margin-top:1.5rem;">送信して採点する</button>
+        </div>
+
+        <div id="ai-score-result" style="max-width:800px;margin:2rem auto;font-size:0.9rem;white-space:pre-wrap;"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;margin-bottom:2rem;">
+          <canvas id="q31RadarChart" width="300" height="300"></canvas>
+          <canvas id="q32RadarChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 AILA. All rights reserved.</p>
+    </footer>
+
+    <script src="/public/js/common.js"></script>
+    <script src="/public/js/grade.js"></script>
+  </body>
+</html>

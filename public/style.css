@@ -1,0 +1,238 @@
+/*
+ * Global styles for the AILA sample site
+ *
+ * This stylesheet centralises colour definitions, typography and a few
+ * reusable layout classes.  It takes inspiration from the original
+ * project’s design while simplifying many of the repeated rules.
+ */
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Colour palette and font families */
+:root {
+  --primary-blue-grey: #3D4852;
+  --light-blue-grey: #62748d;
+  --accent-gold: #B8860B;
+  --accent-gold-light: #d8aa4b;
+  --text-dark: #2d3748;
+  --text-light: #718096;
+  --background: #FDFCF9;
+  --section-bg: #f7f9fc;
+  --font-serif: 'Noto Serif JP', serif;
+  --font-sans: 'Noto Sans JP', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  color: var(--text-dark);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--primary-blue-grey);
+  letter-spacing: 0.02em;
+}
+
+/* Header and navigation */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(253, 252, 249, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+}
+.header.scrolled {
+  padding: 0.5rem 0;
+  background: rgba(253, 252, 249, 0.98);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-family: var(--font-serif);
+  text-decoration: none;
+  line-height: 1.2;
+}
+.logo-main {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-blue-grey);
+  transition: color 0.3s ease;
+}
+.logo-sub {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  display: block;
+  transition: color 0.3s ease;
+}
+.logo:hover .logo-main {
+  color: var(--accent-gold);
+}
+.logo:hover .logo-sub {
+  color: var(--accent-gold-light);
+}
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+.nav-menu a {
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-gold);
+  transition: width 0.3s ease;
+}
+.nav-menu a:hover::after {
+  width: 100%;
+}
+.nav-menu a:hover {
+  color: var(--accent-gold);
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.section {
+  padding: 4rem 0;
+}
+.section-alt {
+  background: var(--section-bg);
+  padding: 4rem 0;
+}
+
+/* Hero section */
+.hero {
+  height: 80vh;
+  background: radial-gradient(circle at 10% 20%, var(--light-blue-grey), var(--primary-blue-grey) 90%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.hero-content {
+  max-width: 800px;
+  z-index: 1;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--primary-blue-grey);
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.3s ease;
+}
+.button:hover {
+  background: var(--accent-gold);
+}
+
+/* Cards for members list */
+.member-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.member-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.member-card:hover {
+  transform: translateY(-4px);
+}
+.member-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+  font-family: var(--font-serif);
+  margin: 0 auto 1rem;
+}
+.member-name {
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+.member-role {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+.member-bio {
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+.member-link {
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.member-link:hover {
+  color: var(--accent-gold-light);
+}
+
+/* Footer */
+.footer {
+  background: var(--primary-blue-grey);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.footer a {
+  color: var(--accent-gold-light);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
